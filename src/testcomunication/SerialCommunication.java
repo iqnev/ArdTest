@@ -11,16 +11,18 @@ import gnu.io.SerialPortEventListener;
 import java.io.InputStream;
 import java.io.OutputStream;
 import gnu.io.CommPort;
+import java.io.IOException;
 
 /**
  *
  * @author iqnev
  */
-public class SerialCommunication{
-    
+public class SerialCommunication {
+
     private static SerialCommunication instance = null;
     private static boolean coonected = false;
-    
+    private SerialPort serialPort;
+
     /**
      * Milliseconds to block while waiting for port open
      */
@@ -29,25 +31,26 @@ public class SerialCommunication{
      * Default bits per second for COM port.
      */
     private static final int DATA_RATE = 9600;
-    
+
     private SerialCommunication() {
         super();
         try {
-          //  connect("COM4");
+            connect("/dev/tty.usbserial-A9007UX1");
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         SerialCommunication.coonected = true;
     }
-    
+
     public static SerialCommunication getInstance() {
-        if(instance == null) {
-            instance = new SerialCommunication();          
+        if (instance == null) {
+            instance = new SerialCommunication();
         }
-        
-         return instance;
+
+        return instance;
     }
+    
     
     void connect(String portName) throws Exception {
         CommPortIdentifier portIdentifier = CommPortIdentifier
@@ -55,32 +58,39 @@ public class SerialCommunication{
         if (portIdentifier.isCurrentlyOwned()) {
             System.out.println("Error: Port is currently in use");
         } else {
-            
-            //TODO last params to be global 
+ 
             CommPort commPort = portIdentifier.open(this.getClass().getName(),
                     TIME_OUT);
 
             if (commPort instanceof SerialPort) {
-                SerialPort serialPort = (SerialPort) commPort;
-                serialPort.setSerialPortParams(DATA_RATE, 
+                serialPort = (SerialPort) commPort;
+                serialPort.setSerialPortParams(DATA_RATE,
                         SerialPort.DATABITS_8,
-                        SerialPort.STOPBITS_1, 
+                        SerialPort.STOPBITS_1,
                         SerialPort.PARITY_NONE);
-                
+
                 // open the streams
-                InputStream in = serialPort.getInputStream();
-                OutputStream out = serialPort.getOutputStream();
-
+                //     InputStream in = serialPort.getInputStream();
+                //       OutputStream out = serialPort.getOutputStream();
             //    (new Thread(new SerialReader(in))).start();
-              //  (new Thread(new SerialWriter(out))).start();
-
+                //  (new Thread(new SerialWriter(out))).start();
             } else {
                 System.out
                         .println("Error: Only serial ports are handled by this example.");
             }
         }
+
     }
     
-    
-  
+    /**
+     * 
+     * @param msg
+     * @throws IOException 
+     */
+    public void sendMessage(String msg) throws IOException {
+        SerialWriter writer = new SerialWriter(serialPort.getOutputStream());
+        writer.setMessage(msg);
+        (new Thread(writer)).start();
+    }
+
 }
