@@ -5,10 +5,32 @@
  */
 package testcomunication;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 /**
  *
  * @author iqnev
  */
-public class SerialWriter {
-    
+public class SerialWriter implements Runnable {
+    OutputStream out;
+    String message;
+
+    public SerialWriter(OutputStream out) {
+        this.out = out;
+    }
+
+    public void setMessage(String msg) {
+        this.message = msg;
+    }
+
+    public void run() {
+        try {
+            if(message != null) {
+                this.out.write(message.getBytes());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
