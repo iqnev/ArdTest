@@ -32,17 +32,6 @@ public class SerialCommunication {
      */
     private static final int DATA_RATE = 9600;
 
-    private SerialCommunication() {
-        super();
-        try {
-            connect("/dev/tty.usbserial-A9007UX1");
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        SerialCommunication.coonected = true;
-    }
-
     public static SerialCommunication getInstance() {
         if (instance == null) {
             instance = new SerialCommunication();
@@ -50,15 +39,14 @@ public class SerialCommunication {
 
         return instance;
     }
-    
-    
-    void connect(String portName) throws Exception {
+
+    public void connect(String portName) throws Exception {
         CommPortIdentifier portIdentifier = CommPortIdentifier
                 .getPortIdentifier(portName);
         if (portIdentifier.isCurrentlyOwned()) {
             System.out.println("Error: Port is currently in use");
         } else {
- 
+
             CommPort commPort = portIdentifier.open(this.getClass().getName(),
                     TIME_OUT);
 
@@ -72,7 +60,7 @@ public class SerialCommunication {
                 // open the streams
                 //     InputStream in = serialPort.getInputStream();
                 //       OutputStream out = serialPort.getOutputStream();
-            //    (new Thread(new SerialReader(in))).start();
+                //    (new Thread(new SerialReader(in))).start();
                 //  (new Thread(new SerialWriter(out))).start();
             } else {
                 System.out
@@ -81,16 +69,25 @@ public class SerialCommunication {
         }
 
     }
-    
+
     /**
-     * 
+     *
      * @param msg
-     * @throws IOException 
+     * @throws IOException
      */
     public void sendMessage(String msg) throws IOException {
         SerialWriter writer = new SerialWriter(serialPort.getOutputStream());
         writer.setMessage(msg);
         (new Thread(writer)).start();
     }
-
+    
+    /**
+     * 
+     */
+    public void close() {
+        if (serialPort != null) {
+            serialPort.removeEventListener();
+            serialPort.close();
+        }
+    }
 }
