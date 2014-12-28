@@ -4,6 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/TestComunication.java</file>
+            <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/SerialWriter.java</file>
             <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/SerialReader.java</file>
             <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/SerialCommunication.java</file>
         </group>

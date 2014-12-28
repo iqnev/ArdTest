@@ -13,10 +13,10 @@ import java.io.IOException;
  */
 public class TestComunication {
     public static void main(String[] args) throws IOException, Exception {
-        SerialCommunication serialCommunication = SerialCommunication.getInstance();
+      /*  SerialCommunication serialCommunication = SerialCommunication.getInstance();
         serialCommunication.connect("/dev/tty.usbserial-A9007UX1");
        serialCommunication.sendMessage("test");
        
-       serialCommunication.close();
+       serialCommunication.close(); */
     }
 }
