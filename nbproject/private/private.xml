@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/TestComunication.java</file>
-            <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/SerialWriter.java</file>
-            <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/SerialReader.java</file>
-            <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/SerialCommunication.java</file>
+            <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/Connection.java</file>
+            <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/SerialClassConnection.java</file>
+            <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/Utilities.java</file>
+            <file>file:/Users/iqnev/NetBeansProjects/TestComunication/src/testcomunication/ComPort.java</file>
         </group>
     </open-files>
 </project-private>

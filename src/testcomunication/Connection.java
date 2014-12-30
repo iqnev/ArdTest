@@ -14,72 +14,72 @@ import java.util.List;
  * @author iqnev
  */
 public abstract class Connection {
+
     private ArrayList<ConnectionStatus> listeners;
     private boolean isConnected;
-    
+
     /**
-     * 
+     *
      */
     protected Connection() {
         this.listeners = new ArrayList<>();
     }
-    
+
     /**
-     * 
+     *
      */
     public void notifyListeners() {
-        for(ConnectionStatus listener : listeners) {
+        for (ConnectionStatus listener : listeners) {
             listener.statusChanged(this.isConnected);
         }
     }
-    
+
     /**
-     * 
+     *
      * @return true if the connection is connected
      */
     public boolean isConnected() {
-    return this.isConnected;
-  }
-    
+        return this.isConnected;
+    }
+
     /**
-     * 
-     * @param obj 
+     *
+     * @param obj
      */
     public void registerChangedListener(ConnectionStatus obj) {
-        if(obj != null) {
+        if (obj != null) {
             this.listeners.add(obj);
         } else {
             throw new NullPointerException("Null Observer");
         }
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public abstract boolean isDataAvailable();
-    
+
     /**
-     * 
-     * @return
-     * @throws IOException 
+     *
+     * @return @throws IOException
      */
     public abstract int getAvailableBytes() throws IOException;
-    
+
     /**
-     * 
+     *
      * @param num
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     public abstract byte[] readBlocked(int num) throws IOException;
-    
+
     /**
-     * 
+     *
      * @param bytes
-     * @throws IOException 
+     * @throws IOException
      */
-    public abstract void write(byte[] bytes) throws IOException; 
-    
+    public abstract void write(byte[] bytes) throws IOException;
+
     public abstract boolean close();
 }
