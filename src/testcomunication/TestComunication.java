@@ -7,7 +7,11 @@ package testcomunication;
 
 import gnu.io.CommPortIdentifier;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
+import static sun.security.krb5.Confounder.bytes;
 
 /**
  *
@@ -65,29 +69,27 @@ public class TestComunication {
 
         connection = conn;
         // listen forever for incoming data
+      
+     //   System.out.println(tekst.getBytes());
         while (true) {
             if (connection.isDataAvailable()) {
                 // data is available and you can read now.
                 availableBytes = connection.getAvailableBytes();
-                inBytes = connection.readBlocked(availableBytes);
-
-                System.out.println(inBytes);
-            }
+            //    if(availableBytes == 12) {
+                     inBytes = connection.readBlocked(11);
+       
+                String text = new String(inBytes, "UTF-8");
+                System.out.println(text);
+                }
+               
+           // }
         }
     }
 
     public static void main(String[] args) throws IOException {
 
         new TestComunication();
-        Thread t=new Thread() {
-			public void run() {
-				//the following line will keep this app alive for 1000 seconds,
-				//waiting for events to occur and responding to them (printing incoming messages to console).
-				try {Thread.sleep(1000000);} catch (InterruptedException ie) {}
-			}
-		};
-		t.start();
-		System.out.println("Started");
+        
         /*  SerialCommunication serialCommunication = SerialCommunication.getInstance();
          serialCommunication.connect("/dev/tty.usbserial-A9007UX1");
          serialCommunication.sendMessage("test");

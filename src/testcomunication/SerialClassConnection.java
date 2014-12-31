@@ -81,7 +81,7 @@ public class SerialClassConnection extends Connection{
         }
         try {
             this.inputStream = new DataInputStream(this.serialPort.getInputStream());
-            this.outputStream = new DataOutputStream(this.serialPort.getOutputStream());
+            this.outputStream = this.serialPort.getOutputStream();
         
         } catch (IOException e) {
             return false;
@@ -113,7 +113,7 @@ public class SerialClassConnection extends Connection{
         return this.inputStream.available();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public byte[] readBlocked(int num) throws IOException {
         byte[] buff;
