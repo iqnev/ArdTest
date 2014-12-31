@@ -30,10 +30,10 @@ public class TestComunication {
     };
 
     public TestComunication() throws IOException {
-      //  System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
+        //  System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
         SerialClassConnection serialClassConnection = null;
         CommPortIdentifier port = null;
-        
+
         serialClassConnection = SerialClassConnection.getInstance();
         Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
 
@@ -53,11 +53,11 @@ public class TestComunication {
             return;
         }
         System.out.println(port.getName());
-       
+
         serialClassConnection.openPort(port);
 
         this.connection = serialClassConnection;
-        
+
         this.manageData(this.connection);
     }
 
@@ -69,27 +69,38 @@ public class TestComunication {
 
         connection = conn;
         // listen forever for incoming data
-      
-     //   System.out.println(tekst.getBytes());
+
+        //   System.out.println(tekst.getBytes());
         while (true) {
             if (connection.isDataAvailable()) {
                 // data is available and you can read now.
-                availableBytes = connection.getAvailableBytes();
-            //    if(availableBytes == 12) {
-                     inBytes = connection.readBlocked(11);
-       
+                //availableBytes = connection.getAvailableBytes();
+                //    if(availableBytes == 12) {
+                inBytes = connection.readBlocked(11);
                 String text = new String(inBytes, "UTF-8");
                 System.out.println(text);
-                }
-               
-           // }
+            }
+
+            // }
         }
     }
 
     public static void main(String[] args) throws IOException {
 
         new TestComunication();
-        
+        Thread t = new Thread() {
+            public void run() {
+				//the following line will keep this app alive for 1000 seconds,
+                //waiting for events to occur and responding to them (printing incoming messages to console).
+                try {
+                    Thread.sleep(1000000);
+                } catch (InterruptedException ie) {
+                }
+            }
+        };
+        t.start();
+        System.out.println("Started");
+
         /*  SerialCommunication serialCommunication = SerialCommunication.getInstance();
          serialCommunication.connect("/dev/tty.usbserial-A9007UX1");
          serialCommunication.sendMessage("test");
