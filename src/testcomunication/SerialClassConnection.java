@@ -18,11 +18,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.TooManyListenersException;
 
+
 /**
  *
  * @author iqnev
  */
-public class SerialClassConnection extends Connection {
+    public class SerialClassConnection extends Connection {
 
     private static final int DEFAULT_TIME_OUT = 2000;
     private static final int DEFAULT_DATA_RATE = 9600;
@@ -90,7 +91,7 @@ public class SerialClassConnection extends Connection {
         try {
             this.inputStream = new DataInputStream(this.serialPort.getInputStream());
             this.outputStream = this.serialPort.getOutputStream();
-            this.addSerialEventListener((SerialPortEventListener) this.serialPort);
+            
 
         } catch (IOException e) {
             return false;
@@ -106,7 +107,7 @@ public class SerialClassConnection extends Connection {
          return new BufferedReader(new InputStreamReader(this.serialPort.getInputStream()));
      }
 
-    public void addSerialEventListener(SerialPortEventListener _listener) throws TooManyListenersException {
+    public void addSerialEventListener(TestComunication _listener) throws TooManyListenersException {
         if (_listener == null) {
             throw new NullPointerException("Listener is null"); //$NON-NLS-1$
         }

@@ -63,7 +63,8 @@ public class TestComunication implements SerialPortEventListener{
         serialClassConnection.openPort(port);
 
         this.connection = serialClassConnection;
-      //  serialClassConnection.addSerialEventListener((SerialPortEventListener) this.connection);
+      
+        serialClassConnection.addSerialEventListener(this);
       //  this.manageData(this.connection);
     }
 
