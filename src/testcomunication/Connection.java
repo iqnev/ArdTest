@@ -5,7 +5,9 @@
  */
 package testcomunication;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,4 +84,9 @@ public abstract class Connection {
     public abstract void write(byte[] bytes) throws IOException;
 
     public abstract boolean close();
+    
+ 
+    public abstract void test() throws IOException;
+    
+     public abstract BufferedReader inputeBlock()  throws IOException;
 }

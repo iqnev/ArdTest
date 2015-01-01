@@ -8,14 +8,15 @@ package testcomunication;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileDescriptor;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.TooManyListenersException;
 
 /**
  *
@@ -66,7 +67,7 @@ public class SerialClassConnection extends Connection {
         return instance;
     }
 
-    public boolean openPort(CommPortIdentifier commId) {
+    public boolean openPort(CommPortIdentifier commId) throws TooManyListenersException {
         if (commId == null) {
             throw new NullPointerException("Com port null");
         }
@@ -77,13 +78,19 @@ public class SerialClassConnection extends Connection {
 
         try {
             this.serialPort = (SerialPort) commId.open(SerialClassConnection.class.getName(), this.timeOut);
+
             this.serialPort.setSerialPortParams(this.dataRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            
+          
+            this.serialPort.notifyOnDataAvailable(true);
+            this.serialPort.notifyOnOutputEmpty(true);
         } catch (UnsupportedCommOperationException | PortInUseException _e) {
             _e.printStackTrace();
         }
         try {
             this.inputStream = new DataInputStream(this.serialPort.getInputStream());
             this.outputStream = this.serialPort.getOutputStream();
+            this.addSerialEventListener((SerialPortEventListener) this.serialPort);
 
         } catch (IOException e) {
             return false;
@@ -92,6 +99,18 @@ public class SerialClassConnection extends Connection {
         this.notifyListeners();
 
         return true;
+    }
+    
+    @Override
+     public BufferedReader inputeBlock() throws IOException {
+         return new BufferedReader(new InputStreamReader(this.serialPort.getInputStream()));
+     }
+
+    public void addSerialEventListener(SerialPortEventListener _listener) throws TooManyListenersException {
+        if (_listener == null) {
+            throw new NullPointerException("Listener is null"); //$NON-NLS-1$
+        }
+        this.serialPort.addEventListener(_listener);
     }
 
     @Override
@@ -115,13 +134,24 @@ public class SerialClassConnection extends Connection {
         return this.inputStream.available();
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+       @Override
+    public void test() throws IOException {
+        /*private*/ 
+        BufferedReader inputTest;
+        String inputLine;
+        
+        inputTest = new BufferedReader(new InputStreamReader(this.serialPort.getInputStream()));                           
+                System.out.println(inputTest.readLine());
+    }
 
     @Override
     public byte[] readBlocked(int num) throws IOException {
         byte[] buff;
         buff = new byte[num];
-        this.inputStream.readFully(buff, 0, buff.length);
-        //   String text = new String(buff, "UTF-8");
+        
+       this.inputStream.readFully(buff, 0, num);
+
         return buff;
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -151,5 +181,8 @@ public class SerialClassConnection extends Connection {
         return true;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+   
+   
+ 
 
 }

@@ -6,18 +6,23 @@
 package testcomunication;
 
 import gnu.io.CommPortIdentifier;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.util.Enumeration;
+import java.util.TooManyListenersException;
 import static sun.security.krb5.Confounder.bytes;
 
 /**
  *
  * @author iqnev
  */
-public class TestComunication {
+public class TestComunication implements SerialPortEventListener{
 
     private Connection connection;
     //private CommPortIdentifier port;
@@ -26,11 +31,12 @@ public class TestComunication {
         "/dev/ttyACM0", // Raspberry Pi
         "/dev/ttyUSB0", // Linux
         "COM3", // Windows
-        "/dev/tty.usbmodem621"
+        "/dev/tty.usbmodem621",
+        "/dev/tty.usbmodem411"
     };
 
-    public TestComunication() throws IOException {
-        //  System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
+    public TestComunication() throws IOException, TooManyListenersException {
+
         SerialClassConnection serialClassConnection = null;
         CommPortIdentifier port = null;
 
@@ -57,8 +63,8 @@ public class TestComunication {
         serialClassConnection.openPort(port);
 
         this.connection = serialClassConnection;
-
-        this.manageData(this.connection);
+      //  serialClassConnection.addSerialEventListener((SerialPortEventListener) this.connection);
+      //  this.manageData(this.connection);
     }
 
     private void manageData(Connection conn) throws IOException {
@@ -70,30 +76,26 @@ public class TestComunication {
         connection = conn;
         // listen forever for incoming data
 
-        //   System.out.println(tekst.getBytes());
         while (true) {
             if (connection.isDataAvailable()) {
-                // data is available and you can read now.
-                //availableBytes = connection.getAvailableBytes();
-                //    if(availableBytes == 12) {
-                inBytes = connection.readBlocked(11);
-                String text = new String(inBytes, "UTF-8");
-                System.out.println(text);
+                connection.test();
+                    inBytes = connection.readBlocked(11);
+                    String text = new String(inBytes, "UTF-8");
+                    System.out.println(text);
             }
 
-            // }
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, TooManyListenersException {
 
         new TestComunication();
         Thread t = new Thread() {
             public void run() {
-				//the following line will keep this app alive for 1000 seconds,
+                //the following line will keep this app alive for 1000 seconds,
                 //waiting for events to occur and responding to them (printing incoming messages to console).
                 try {
-                    Thread.sleep(1000000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException ie) {
                 }
             }
@@ -101,10 +103,19 @@ public class TestComunication {
         t.start();
         System.out.println("Started");
 
-        /*  SerialCommunication serialCommunication = SerialCommunication.getInstance();
-         serialCommunication.connect("/dev/tty.usbserial-A9007UX1");
-         serialCommunication.sendMessage("test");
-       
-         serialCommunication.close(); */
+    }
+
+    @Override
+    public void serialEvent(SerialPortEvent spe) {
+        if (spe.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
+                try {
+                    BufferedReader inputLine = this.connection.inputeBlock();
+                    final String test = inputLine.readLine();
+                    System.out.println(test);
+                } catch (Exception e) {
+                    System.err.println(e.toString());
+                }
+            }
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
