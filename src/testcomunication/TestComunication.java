@@ -64,8 +64,8 @@ public class TestComunication implements SerialPortEventListener{
 
         this.connection = serialClassConnection;
       
-        serialClassConnection.addSerialEventListener(this);
-      //  this.manageData(this.connection);
+       // serialClassConnection.addSerialEventListener(this);
+       this.manageData(this.connection);
     }
 
     private void manageData(Connection conn) throws IOException {
@@ -78,9 +78,9 @@ public class TestComunication implements SerialPortEventListener{
         // listen forever for incoming data
 
         while (true) {
-            if (connection.isDataAvailable()) {
-                connection.test();
-                    inBytes = connection.readBlocked(11);
+            if (connection.isDataAvailable()) {  
+             //   connection.test();
+                    inBytes = connection.readBlocked(52);
                     String text = new String(inBytes, "UTF-8");
                     System.out.println(text);
             }
