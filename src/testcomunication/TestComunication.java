@@ -88,8 +88,8 @@ public class TestComunication implements SerialPortEventListener{
         }
     }
 
-    public static void main(String[] args) throws IOException, TooManyListenersException {
-
+    public static void main(String[] args) throws IOException, TooManyListenersException {     
+        
         new TestComunication();
         Thread t = new Thread() {
             public void run() {
@@ -103,6 +103,11 @@ public class TestComunication implements SerialPortEventListener{
         };
         t.start();
         System.out.println("Started");
+        
+        
+        
+        
+        
 
     }
 
