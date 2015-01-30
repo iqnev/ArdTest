@@ -10,15 +10,15 @@ package testcomunication;
  * @author iqnev
  */
 public abstract class Command {
+
     private CommandIndeficator ind; //EnumClass
-    
+
     protected Command(CommandIndeficator ind) {
         this.ind = ind;
     }
-    
+
     public CommandIndeficator getCommandIndeficator() {
         return this.ind;
     }
-    
-    
+
 }

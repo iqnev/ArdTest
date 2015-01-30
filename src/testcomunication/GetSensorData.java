@@ -9,6 +9,11 @@ package testcomunication;
  *
  * @author iqnev
  */
-public class GetSensorData {
+public class GetSensorData extends Command{
+   
+    public GetSensorData() {
+        super(CommandIndeficator.Sensor);
+    }
+    
     
 }

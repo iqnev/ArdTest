@@ -7,9 +7,6 @@ package testcomunication;
 
 import java.nio.ByteBuffer;
 
-
-
-
 /**
  *
  * @author iqnev
@@ -19,12 +16,12 @@ public class TestDataLink implements DataLinkLayer{
     @Override
     public byte[] getRequestPackage(Command _command) {
         ByteBuffer buffer = ByteBuffer.allocate(1024);
-        buffer.put((byte)01); //Start of Heading
+        buffer.put((byte) 0x12); //Start flag
         buffer.put(_command.getCommandIndeficator());
         
         
         
-        _command.getCommandIndeficator();
+        //_command.getCommandIndeficator();
         //create  Frame
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
