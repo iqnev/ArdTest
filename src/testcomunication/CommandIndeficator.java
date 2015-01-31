@@ -23,7 +23,7 @@ public enum CommandIndeficator {
     /**
      * @return the {@code int} representing this {@code ComPortType.}
      */
-    public int getInt() {
+    public byte getByte() {
         return this.type;
     }
 }

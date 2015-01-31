@@ -1,6 +1,6 @@
 /**
  * Frame structure: 
- * StartByte|PacketType|SubCommenad|PayloadLength|Payload|CRC|EndFrame
+ * StartByte|CommenadIndeficator|PayloadLength|Payload|CRC|EndFrame
  */
 package testcomunication;
 

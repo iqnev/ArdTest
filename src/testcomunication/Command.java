@@ -18,7 +18,13 @@ public abstract class Command {
     }
 
     public CommandIndeficator getCommandIndeficator() {
-        return this.ind;
+        return  this.ind;
     }
+    
+    /**
+     * return byte for command data 
+     * @return byte
+     */
+    public abstract byte getData();
 
 }
