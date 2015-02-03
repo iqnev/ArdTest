@@ -25,6 +25,6 @@ public abstract class Command {
      * return byte for command data 
      * @return byte
      */
-    public abstract byte getData();
+    public abstract byte[] getData();
 
 }

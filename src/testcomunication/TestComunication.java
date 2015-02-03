@@ -64,50 +64,24 @@ public class TestComunication implements SerialPortEventListener{
 
         this.connection = serialClassConnection;
       
-       // serialClassConnection.addSerialEventListener(this);
-       this.manageData(this.connection);
+        serialClassConnection.addSerialEventListener(this);
+      
     }
-
-    private void manageData(Connection conn) throws IOException {
-
-        Connection connection;
-        int availableBytes;
-        byte[] inBytes;
-
-        connection = conn;
-        // listen forever for incoming data
-
-        while (true) {
-            if (connection.isDataAvailable()) {  
-             //   connection.test();
-                    inBytes = connection.readBlocked(52);
-                    String text = new String(inBytes, "UTF-8");
-                    System.out.println(text);
-            }
-
-        }
+    
+    public void sendComand(Command cmd) throws IOException {
+        byte[] cmdData;
+        cmdData = cmd.getData();
+        this.connection.write(cmdData);
     }
 
     public static void main(String[] args) throws IOException, TooManyListenersException {     
         
-        new TestComunication();
-        Thread t = new Thread() {
-            public void run() {
-                //the following line will keep this app alive for 1000 seconds,
-                //waiting for events to occur and responding to them (printing incoming messages to console).
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException ie) {
-                }
-            }
-        };
-        t.start();
-        System.out.println("Started");
+        TestComunication testComunication = new TestComunication();
         
+        Command cmd = new GetSensorData("hellow");
         
-        
-        
-        
+        testComunication.sendComand(cmd);
+    
 
     }
 

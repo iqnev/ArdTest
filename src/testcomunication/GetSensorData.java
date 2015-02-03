@@ -11,23 +11,19 @@ package testcomunication;
  */
 public class GetSensorData extends Command{
     
-    private byte data = 0;
+    /**
+     * 
+     */
+    private String sensorType;
     
-    public GetSensorData() {
+    public GetSensorData(String data) {
         super(CommandIndeficator.Sensor);
+        this.sensorType = data;
     }
 
     @Override
-    public byte getData() {
-       return data;
+    public byte[] getData() {
+       return this.sensorType.getBytes();
     }
-    
-    /**
-     * set data which you want to sent together with command
-     * @param data 
-     */
-    public void setData(byte data) {
-        this.data = data;
-    } 
-    
+
 }

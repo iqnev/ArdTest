@@ -6,29 +6,46 @@
 package testcomunication;
 
 import java.nio.ByteBuffer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author iqnev
  */
-public class TestDataLink implements DataLinkLayer{
-
+public class TestDataLink implements DataLinkLayer {
+   
     @Override
     public byte[] getRequestPackage(Command _command) {
-        ByteBuffer buffer = ByteBuffer.allocate(1024);
-        buffer.put((byte) 0x12); 
-        buffer.put(_command.getCommandIndeficator().getByte());
-        //length
-        buffer.put(_command.getData());
+        int frameLenght =7;
+        int dataLenght;
+        dataLenght = _command.getData().length;
+        frameLenght += dataLenght;
         
-      
-        //create  Frame
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        ByteBuffer buffer = ByteBuffer.allocate(frameLenght);
+
+           // Create MessageDigest instance for MD5
+     
+           // MessageDigest md = MessageDigest.getInstance("MD5");
+            
+            //Add command bytes to digest
+           // md.update(_command.getCommandIndeficator().getByte());
+            buffer.put(FrameDelimeters.START);
+            buffer.put(_command.getCommandIndeficator().getByte());
+            buffer.putInt(dataLenght);
+            buffer.put(_command.getData());
+           // buffer.put(md.digest());
+            buffer.put(FrameDelimeters.END);
+  
+        return buffer.array();
     }
 
     @Override
     public Packet parsePacket(Connection _connection) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
