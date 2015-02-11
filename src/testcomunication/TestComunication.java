@@ -6,6 +6,7 @@
 package testcomunication;
 
 import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import java.io.BufferedReader;
@@ -25,6 +26,7 @@ import static sun.security.krb5.Confounder.bytes;
 public class TestComunication implements SerialPortEventListener{
 
     private Connection connection;
+    private  SerialClassConnection serialClassConnection;
     //private CommPortIdentifier port;
     private static final String PORT_NAMES[] = {
         "/dev/tty.usbserial-A9007UX1", // Mac OS X
@@ -32,19 +34,23 @@ public class TestComunication implements SerialPortEventListener{
         "/dev/ttyUSB0", // Linux
         "COM3", // Windows
         "/dev/tty.usbmodem621",
+       // "/dev/cu.usbmodem621",
         "/dev/tty.usbmodem411"
     };
 
     public TestComunication() throws IOException, TooManyListenersException {
 
-        SerialClassConnection serialClassConnection = null;
-        CommPortIdentifier port = null;
+       
+        
 
-        serialClassConnection = SerialClassConnection.getInstance();
+        this.serialClassConnection = SerialClassConnection.getInstance();
         Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
-
+        
+        
+        serialClassConnection.addSerialEventListener(this);
+        
         //First, Find an instance of serial port as set in PORT_NAMES.
-        while (portEnum.hasMoreElements()) {
+      /*  while (portEnum.hasMoreElements()) {
             CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();
             for (String portName : PORT_NAMES) {
                 if (currPortId.getName().equals(portName)) {
@@ -63,9 +69,21 @@ public class TestComunication implements SerialPortEventListener{
         serialClassConnection.openPort(port);
 
         this.connection = serialClassConnection;
+     */ 
+        
       
-        serialClassConnection.addSerialEventListener(this);
-      
+    }
+    
+    public boolean openPort(String portName) throws NoSuchPortException, TooManyListenersException {
+        
+        if (portName == null || portName.isEmpty()) {
+            throw new NullPointerException("Portname is null");
+        }
+        CommPortIdentifier port =  CommPortIdentifier.getPortIdentifier(portName);
+        
+        this.serialClassConnection.openPort(port);
+        
+        return true;
     }
     
     public void sendComand(Command cmd) throws IOException {
