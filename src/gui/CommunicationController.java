@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.TooManyListenersException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +31,10 @@ public class CommunicationController implements ActionListener {
         this.view.addActionListener(this);
 
         // initialize connection here
-    //    this.communication = new TestComunication();
-
+        this.communication = new TestComunication();
+        ArrayList<String> listPorts = this.communication.getPortIdentifiers();
+ 
+        this.view.setListPorts(listPorts);
         this.frame.getContentPane().add(this.view);
         this.frame.setVisible(true);
     }

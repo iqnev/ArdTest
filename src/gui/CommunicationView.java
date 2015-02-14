@@ -3,6 +3,7 @@ package gui;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 
@@ -24,8 +25,10 @@ public class CommunicationView extends JPanel {
     private JButton sendButton;
     private JButton connectButton;
     private JComboBox portsList;
+    private ArrayList<String> listPorts;
 
     public CommunicationView() {
+        this.add(Box.createRigidArea(new Dimension(0, 10)));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(this.createConnectionPanel());
         this.add(Box.createRigidArea(new Dimension(0, 300)));
@@ -51,9 +54,9 @@ public class CommunicationView extends JPanel {
         String[] petStrings = {"Bird", "Cat", "Dog", "Rabbit", "Pig"};
         this.portsList = new JComboBox(petStrings);
         this.connectButton = new JButton(buttonTitle);
-
-        connectionPanel.add(this.portsList);
-        //connectionPanel.add(Box.createRigidArea(new Dimension(0, 0)));
+        this.portsList.setPreferredSize(new Dimension(80, 20));
+         
+        connectionPanel.add(this.portsList);   
         connectionPanel.add(this.connectButton);
 
         return connectionPanel;
@@ -84,5 +87,8 @@ public class CommunicationView extends JPanel {
     public String getPortName() {
         return (String) this.portsList.getSelectedItem();
     }
-
+    
+    public void setListPorts(ArrayList<String> ports) {
+        this.listPorts = ports;
+    }
 }

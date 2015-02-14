@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.TooManyListenersException;
 import static sun.security.krb5.Confounder.bytes;
@@ -47,7 +48,7 @@ public class TestComunication implements SerialPortEventListener{
         Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
         
         
-        serialClassConnection.addSerialEventListener(this);
+    //    serialClassConnection.addSerialEventListener(this);
         
         //First, Find an instance of serial port as set in PORT_NAMES.
       /*  while (portEnum.hasMoreElements()) {
@@ -85,6 +86,18 @@ public class TestComunication implements SerialPortEventListener{
         
         return true;
     }
+    
+    public ArrayList<String> getPortIdentifiers() {
+         Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
+         ArrayList<String> ports = new ArrayList<String>();
+         
+         while (portEnum.hasMoreElements()) {
+            CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();
+                ports.add(currPortId.getName());
+         }
+            return ports;
+    }
+
     
     public void sendComand(Command cmd) throws IOException {
         byte[] cmdData;
