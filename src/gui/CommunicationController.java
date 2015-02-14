@@ -23,13 +23,14 @@ public class CommunicationController implements ActionListener {
 
     public CommunicationController() throws IOException, TooManyListenersException {
         this.frame = new JFrame("Test Communication");
-        this.frame.setSize(new Dimension(300, 200));
+        this.frame.setSize(new Dimension(500, 300));
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setLocationRelativeTo(null);
         this.view = new CommunicationView();
         this.view.addActionListener(this);
 
         // initialize connection here
-        this.communication = new TestComunication();
+    //    this.communication = new TestComunication();
 
         this.frame.getContentPane().add(this.view);
         this.frame.setVisible(true);
@@ -53,7 +54,7 @@ public class CommunicationController implements ActionListener {
             } catch (IOException ex) {
                 Logger.getLogger(CommunicationController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (actionCommand.equals(this.view.BUTTON_CONNECT)) {
+        } else if (actionCommand.equals(ViewConstants.BUTTON_CONNECT)) {
             String portName = this.view.getPortName();
 
             try {
