@@ -1,8 +1,10 @@
 package gui;
 
+import helpers.ComboBoxListPortAdapter;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -14,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.PopupMenuListener;
 
 public class CommunicationView extends JPanel {
 
@@ -49,10 +52,13 @@ public class CommunicationView extends JPanel {
         connectionPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 0));
         
         connectionPanel.setBorder(border);
+        
+       this.portsList = new JComboBox();
 
-        //TODO fill @portsList with port name
-        String[] petStrings = {"Bird", "Cat", "Dog", "Rabbit", "Pig"};
-        this.portsList = new JComboBox(petStrings);
+        ComboBoxListPortAdapter adapter = new ComboBoxListPortAdapter(this.portsList);
+
+        this.portsList.addPopupMenuListener(adapter);
+        
         this.connectButton = new JButton(buttonTitle);
         this.portsList.setPreferredSize(new Dimension(80, 20));
          
@@ -81,8 +87,14 @@ public class CommunicationView extends JPanel {
 
         this.connectButton.addActionListener(_listener);
         this.connectButton.setActionCommand(ViewConstants.BUTTON_CONNECT);
-
+        
     }
+    
+    public void addComoBoxListener(PopupMenuListener _listener) {
+        this.portsList.addPopupMenuListener(_listener);
+        this.portsList.setActionCommand(ViewConstants.COMBOBOX_PORTS);
+    }
+    
 
     public String getPortName() {
         return (String) this.portsList.getSelectedItem();
