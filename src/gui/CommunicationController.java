@@ -36,9 +36,7 @@ public class CommunicationController implements ActionListener {
 
         // initialize connection here
         this.communication = new TestComunication();
-        ArrayList<String> listPorts = this.communication.getPortIdentifiers();
- 
-        this.view.setListPorts(listPorts);
+
         this.frame.getContentPane().add(this.view);
         this.frame.setVisible(true);
     }

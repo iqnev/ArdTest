@@ -87,18 +87,6 @@ public class TestComunication implements SerialPortEventListener{
         return true;
     }
     
-    public ArrayList<String> getPortIdentifiers() {
-         Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
-         ArrayList<String> ports = new ArrayList<String>();
-         
-         while (portEnum.hasMoreElements()) {
-            CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();
-                ports.add(currPortId.getName());
-         }
-            return ports;
-    }
-
-    
     public void sendComand(Command cmd) throws IOException {
         byte[] cmdData;
         cmdData = cmd.getData();
@@ -127,6 +115,6 @@ public class TestComunication implements SerialPortEventListener{
                     System.err.println(e.toString());
                 }
             }
-      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     
     }
 }

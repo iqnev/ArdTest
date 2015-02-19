@@ -5,8 +5,11 @@
  */
 package helpers;
 
+import gnu.io.CommPortIdentifier;
 import gui.ViewConstants;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -43,28 +46,34 @@ public class ComboBoxListPortAdapter implements PopupMenuListener {
 
     @Override
     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       this.populateComboBox((JComboBox) e.getSource());
     }
 
     @Override
     public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void popupMenuCanceled(PopupMenuEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 
     private void populateComboBox(JComboBox _comboBox) {
         ComboBoxModel model;
         String[] comPortNames = null;
         
-        //TODO get availible comport List
-       // comPortNames = WinComPortFactory.getAvailableComPorts();
-        model = new DefaultComboBoxModel(comPortNames);
+       Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
+         ArrayList<String> ports = new ArrayList<String>();
+         
+         while (portEnum.hasMoreElements()) {
+            CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();
+                ports.add(currPortId.getName());
+         }
+         
+        model = new DefaultComboBoxModel(ports.toArray());
 
-        if (comPortNames.length == 0) {
+        if (ports.size() == 0) {
             model = new DefaultComboBoxModel(new String[]{ViewConstants.NO_COMM_PORT});
         }
         _comboBox.setModel(model);
