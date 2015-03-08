@@ -28,51 +28,10 @@ public class TestComunication implements SerialPortEventListener{
 
     private Connection connection;
     private  SerialClassConnection serialClassConnection;
-    //private CommPortIdentifier port;
-    private static final String PORT_NAMES[] = {
-        "/dev/tty.usbserial-A9007UX1", // Mac OS X
-        "/dev/ttyACM0", // Raspberry Pi
-        "/dev/ttyUSB0", // Linux
-        "COM3", // Windows
-        "/dev/tty.usbmodem621",
-       // "/dev/cu.usbmodem621",
-        "/dev/tty.usbmodem411"
-    };
 
     public TestComunication() throws IOException, TooManyListenersException {
-
-       
-        
-
         this.serialClassConnection = SerialClassConnection.getInstance();
-        Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
-        
-        
-    //    serialClassConnection.addSerialEventListener(this);
-        
-        //First, Find an instance of serial port as set in PORT_NAMES.
-      /*  while (portEnum.hasMoreElements()) {
-            CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();
-            for (String portName : PORT_NAMES) {
-                if (currPortId.getName().equals(portName)) {
-                    port = currPortId;
-                    break;
-                }
-            }
-        }
-
-        if (port == null) {
-            System.out.println("Could not find COM port.");
-            return;
-        }
-        System.out.println(port.getName());
-
-        serialClassConnection.openPort(port);
-
-        this.connection = serialClassConnection;
-     */ 
-        
-      
+        Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();     
     }
     
     public boolean openPort(String portName) throws NoSuchPortException, TooManyListenersException {

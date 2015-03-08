@@ -34,7 +34,30 @@ public class CommunicationView extends JPanel {
         this.add(Box.createRigidArea(new Dimension(0, 10)));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(this.createConnectionPanel());
-        this.add(Box.createRigidArea(new Dimension(0, 300)));
+        
+        this.add(this.createCommandSendPanel());
+         this.add(Box.createRigidArea(new Dimension(0, 100)));
+         
+        
+    }
+    
+    private JPanel createCommandSendPanel(){
+        JPanel commandsPanel;
+        Border border;
+        String borderTitle;
+        String buttonTitle;
+        
+        borderTitle = ViewConstants.COMMANDS_SEND_BORDER;
+        buttonTitle = ViewConstants.BUTTON_SEND;
+        commandsPanel = new JPanel();
+        
+        border = BorderFactory.createTitledBorder(borderTitle);
+      
+        commandsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
+        commandsPanel.setPreferredSize(new Dimension(0, 70));
+        commandsPanel.setBorder(border);
+        
+        return commandsPanel;
     }
 
     private JPanel createConnectionPanel() {
@@ -82,11 +105,11 @@ public class CommunicationView extends JPanel {
      this.add(this.portsList);
      } */
     public void addActionListener(ActionListener _listener) {
-       // this.sendButton.addActionListener(_listener);
-       // this.sendButton.setActionCommand(BUTTON_SEND);
+      //  this.sendButton.addActionListener(_listener);
+     //   this.sendButton.setActionCommand(BUTTON_SEND);
 
         this.connectButton.addActionListener(_listener);
-        this.connectButton.setActionCommand(ViewConstants.BUTTON_CONNECT);
+       this.connectButton.setActionCommand(ViewConstants.BUTTON_CONNECT);
         
     }
     

@@ -61,7 +61,6 @@ public class CommunicationController implements ActionListener {
             }
         } else if (actionCommand.equals(ViewConstants.BUTTON_CONNECT)) {
             String portName = this.view.getPortName();
-
             try {
                 this.communication.openPort(portName);
             } catch (NoSuchPortException e) {
@@ -69,9 +68,7 @@ public class CommunicationController implements ActionListener {
             } catch (TooManyListenersException e) {
                     System.out.println("Error");
             }
-
-            //update seccsesfull
-            System.out.println(portName);
+            
         }
 
     }

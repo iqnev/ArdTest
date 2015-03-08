@@ -80,7 +80,8 @@ import java.util.TooManyListenersException;
         try {
             this.serialPort = (SerialPort) commId.open(SerialClassConnection.class.getName(), this.timeOut);
 
-            this.serialPort.setSerialPortParams(this.dataRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            this.serialPort.setSerialPortParams(this.dataRate, SerialPort.DATABITS_8,
+                    SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             
           
             this.serialPort.notifyOnDataAvailable(true);
