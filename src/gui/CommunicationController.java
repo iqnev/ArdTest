@@ -53,7 +53,7 @@ public class CommunicationController implements ActionListener {
 
         actionCommand = _event.getActionCommand();
 
-        if (actionCommand.equals(this.view.BUTTON_SEND)) {
+        if (actionCommand.equals(ViewConstants.BUTTON_SEND)) {
             try {
                 this.sendCommand();
             } catch (IOException ex) {
