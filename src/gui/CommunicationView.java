@@ -17,8 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.PopupMenuListener;
+import testcomunication.ConnectionStatus;
 
-public class CommunicationView extends JPanel {
+public class CommunicationView extends JPanel implements ConnectionStatus{
 
     private JButton sendButton;
     private JButton connectButton;
@@ -120,5 +121,10 @@ public class CommunicationView extends JPanel {
 
     public void setListPorts(ArrayList<String> ports) {
         this.listPorts = ports;
+    }
+
+    @Override
+    public void statusChanged(boolean _connected) {
+           System.out.println(_connected);
     }
 }

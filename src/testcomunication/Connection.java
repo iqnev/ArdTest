@@ -21,7 +21,7 @@ public abstract class Connection {
     private boolean isConnected;
 
     /**
-     *
+     * 
      */
     protected Connection() {
         this.listeners = new ArrayList<>();

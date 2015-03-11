@@ -128,14 +128,12 @@ import java.util.TooManyListenersException;
             return false;
             // Logger.getLogger(SerialClassConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+       }
 
     @Override
     public int getAvailableBytes() throws IOException {
         return this.inputStream.available();
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+       }
     
        @Override
     public void test() throws IOException {
@@ -155,8 +153,7 @@ import java.util.TooManyListenersException;
        this.inputStream.readFully(buff, 0, num);
 
         return buff;
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        }
 
     @Override
     public void write(byte[] bytes) throws IOException {
@@ -165,8 +162,6 @@ import java.util.TooManyListenersException;
         }
 
         this.outputStream.write(bytes);
-
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -181,8 +176,7 @@ import java.util.TooManyListenersException;
         Utilities.closeConnection(this.outputStream);
         this.notifyListeners();
         return true;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+      }
    
    
  
