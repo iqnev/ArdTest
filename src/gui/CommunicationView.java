@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.PopupMenuListener;
@@ -25,6 +26,8 @@ public class CommunicationView extends JPanel implements ConnectionStatus{
     private JButton connectButton;
     private JComboBox portsList;
     private ArrayList<String> listPorts;
+    
+    private JPanel commandsPanel;
 
     public CommunicationView() {
         this.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -36,7 +39,6 @@ public class CommunicationView extends JPanel implements ConnectionStatus{
     }
 
     private JPanel createCommandSendPanel() {
-        JPanel commandsPanel;
         Border border;
         String borderTitle;
         String buttonTitle;
@@ -65,7 +67,7 @@ public class CommunicationView extends JPanel implements ConnectionStatus{
         String buttonTitle;
 
         borderTitle = ViewConstants.CONNECTION_BORDER;
-        buttonTitle = ViewConstants.BUTTON_CONNECT;
+        buttonTitle = ViewConstants.BUTTON_CONNECT_LABEL;
         connectionPanel = new JPanel();
 
         border = BorderFactory.createTitledBorder(borderTitle);
@@ -77,10 +79,12 @@ public class CommunicationView extends JPanel implements ConnectionStatus{
 
         ComboBoxListPortAdapter adapter = new ComboBoxListPortAdapter(this.portsList);
 
-        this.portsList.addPopupMenuListener(adapter);
-
         this.connectButton = new JButton(buttonTitle);
-        this.portsList.setPreferredSize(new Dimension(80, 20));
+        this.connectButton.setPreferredSize(new Dimension(80, 20));
+        
+        this.portsList.addPopupMenuListener(adapter);
+        this.portsList.setPreferredSize(new Dimension(180, 20));
+        
 
         connectionPanel.add(this.portsList);
         connectionPanel.add(this.connectButton);
@@ -106,7 +110,7 @@ public class CommunicationView extends JPanel implements ConnectionStatus{
         //   this.sendButton.setActionCommand(BUTTON_SEND);
 
         this.connectButton.addActionListener(_listener);
-        this.connectButton.setActionCommand(ViewConstants.BUTTON_CONNECT);
+        this.connectButton.setActionCommand(ViewConstants.CONNECT_ACTION_COMAND);
 
     }
 
@@ -125,6 +129,24 @@ public class CommunicationView extends JPanel implements ConnectionStatus{
 
     @Override
     public void statusChanged(boolean _connected) {
-           System.out.println(_connected);
+           SwingUtilities.invokeLater(new Runnable() {
+               @Override
+               public void run() {
+                  toggleConnection(_connected);
+               }        
+           });
+          
+    }
+    
+    public void toggleConnection(boolean connection) {
+        if(connection) {
+            this.connectButton.setText(ViewConstants.BUTTON_CLOSE_LABEL);
+            this.connectButton.setActionCommand(ViewConstants.DISCONNECT_ACTION_COMAND);
+            this.commandsPanel.setVisible(true);
+        } else {
+            this.connectButton.setText(ViewConstants.BUTTON_CONNECT_LABEL);
+            this.connectButton.setActionCommand(ViewConstants.CONNECT_ACTION_COMAND);
+            this.commandsPanel.setVisible(false);
+        }
     }
 }

@@ -5,6 +5,7 @@
  */
 package testcomunication;
 
+import com.sun.jmx.snmp.SnmpDataTypeEnums;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -95,9 +96,13 @@ import java.util.TooManyListenersException;
             
 
         } catch (IOException e) {
-            return false;
+           Utilities.close(this.inputStream);
+           Utilities.close(this.outputStream);
+           
+           return false;
         }
-
+        
+        this.isConnected = true;
         this.notifyListeners();
 
         return true;
@@ -172,9 +177,12 @@ import java.util.TooManyListenersException;
         this.serialPort.removeEventListener();
         this.serialPort.close();
 
-        Utilities.closeConnection(this.inputStream);
-        Utilities.closeConnection(this.outputStream);
+        Utilities.close(this.inputStream);
+        Utilities.close(this.outputStream);
+        
+        this.isConnected = false;
         this.notifyListeners();
+        
         return true;
       }
    

@@ -14,9 +14,9 @@ import java.io.IOException;
  */
 public class Utilities {
 
-    public static void closeConnection(Closeable stream) {
+    public static void close(Closeable stream) {
         if (stream == null) {
-            throw new NullPointerException("Null Inputstream");
+            return;
         }
 
         try {

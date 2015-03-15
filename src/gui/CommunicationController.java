@@ -17,6 +17,7 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import testcomunication.Command;
 import testcomunication.GetSensorData;
+import testcomunication.SerialClassConnection;
 import testcomunication.TestComunication;
 
 public class CommunicationController implements ActionListener {
@@ -36,7 +37,8 @@ public class CommunicationController implements ActionListener {
 
         // initialize connection here
         this.communication = new TestComunication();
-
+        this.communication.addCannectionStatusListener(this.view);
+        
         this.frame.getContentPane().add(this.view);
         this.frame.setVisible(true);
     }
@@ -59,8 +61,9 @@ public class CommunicationController implements ActionListener {
             } catch (IOException ex) {
                 Logger.getLogger(CommunicationController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (actionCommand.equals(ViewConstants.BUTTON_CONNECT)) {
+        } else if (actionCommand.equals(ViewConstants.CONNECT_ACTION_COMAND)) {
             String portName = this.view.getPortName();
+          
             try {
                 this.communication.openPort(portName);
             } catch (NoSuchPortException e) {
@@ -69,6 +72,8 @@ public class CommunicationController implements ActionListener {
                     System.out.println("Error");
             }
             
+        } else if(actionCommand.equals(ViewConstants.DISCONNECT_ACTION_COMAND)) {
+            SerialClassConnection.getInstance().close();
         }
 
     }

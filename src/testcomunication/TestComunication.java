@@ -27,32 +27,36 @@ import static sun.security.krb5.Confounder.bytes;
 public class TestComunication implements SerialPortEventListener{
 
     private Connection connection;
-    private  SerialClassConnection serialClassConnection;
+    private SerialClassConnection serialClassConnection;
 
     public TestComunication() throws IOException, TooManyListenersException {
-        this.serialClassConnection = SerialClassConnection.getInstance();
-        Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();     
+        this.serialClassConnection = SerialClassConnection.getInstance();    
     }
     
-    public boolean openPort(String portName) throws NoSuchPortException, TooManyListenersException {
-        
+    //register connection change status observer
+    public void addCannectionStatusListener(ConnectionStatus connectionStatus) {
+        this.serialClassConnection.registerChangedListener(connectionStatus);
+    }
+    
+    public boolean openPort(String portName) throws NoSuchPortException, TooManyListenersException {     
         if (portName == null || portName.isEmpty()) {
             throw new NullPointerException("Portname is null");
         }
         CommPortIdentifier port =  CommPortIdentifier.getPortIdentifier(portName);
         
         this.serialClassConnection.openPort(port);
-        
+        this.serialClassConnection.addSerialEventListener(this);
         return true;
     }
     
     public void sendComand(Command cmd) throws IOException {
         byte[] cmdData;
         cmdData = cmd.getData();
-        this.connection.write(cmdData);
+        this.serialClassConnection.write(cmdData);
     }
 
-    public static void main(String[] args) throws IOException, TooManyListenersException {     
+    //Example how you can make command and send it
+   /* public static void main(String[] args) throws IOException, TooManyListenersException {     
         
         TestComunication testComunication = new TestComunication();
         
@@ -61,13 +65,13 @@ public class TestComunication implements SerialPortEventListener{
         testComunication.sendComand(cmd);
     
 
-    }
+    } */
 
     @Override
     public void serialEvent(SerialPortEvent spe) {
         if (spe.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
                 try {
-                    BufferedReader inputLine = this.connection.inputeBlock();
+                    BufferedReader inputLine = this.serialClassConnection.inputeBlock();
                     final String test = inputLine.readLine();
                     System.out.println(test);
                 } catch (Exception e) {
