@@ -18,7 +18,7 @@ import java.util.List;
 public abstract class Connection {
 
     private ArrayList<ConnectionStatus> listeners;
-    private boolean isConnected;
+    protected boolean                   isConnected;
 
     /**
      * 
