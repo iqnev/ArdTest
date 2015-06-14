@@ -12,27 +12,28 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package gui;
+package command;
 
 /**
  * 
- * @author Ivelin Yanev <qnev89@gmail.com>
+ * @author Ivelin Ynev <qnev89@gmail.com>
  * @since 2015
  */
-public interface ViewConstants {
+public enum CommandIndeficator {
 
-	// labels
-	public static final String CONNECTION_BORDER = "Connection";
-	public static final String BUTTON_CONNECT_LABEL = "Connect";
-	public static final String BUTTON_CLOSE_LABEL = "Close";
-	public static final String COMBOBOX_PORTS = "COMBOBOX_PORTS";
+	Sensor(0x10), // byte
+	Motor(0x11); // byte
 
-	// action commands
-	public static final String CONNECT_ACTION_COMAND = "Connect";
-	public static final String DISCONNECT_ACTION_COMAND = "Disconnect";
+	private byte type;
 
-	// todo
-	public static final String COMMANDS_SEND_BORDER = "Commands send";
-	public static final String BUTTON_SEND = "BTN_SEND";
-	public static final String NO_COMM_PORT = "NO_COMM_PORT";
+	private CommandIndeficator(int _type) {
+		this.type = (byte) _type;
+	}
+
+	/**
+	 * @return the {@code int} representing this {@code ComPortType.}
+	 */
+	public byte getByte() {
+		return this.type;
+	}
 }

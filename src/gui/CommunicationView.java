@@ -1,14 +1,29 @@
+/**
+ * Copyright (c) 2015 Ivelin Yanev <qnev89@gmail.com>.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at your option) any later version. 
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+ * 
+ */
 package gui;
 
 import helpers.ComboBoxListPortAdapter;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,135 +33,143 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.PopupMenuListener;
-import testcomunication.ConnectionStatus;
 
-public class CommunicationView extends JPanel implements ConnectionStatus{
+import connection.ConnectionStatus;
 
-    private JButton sendButton;
-    private JButton connectButton;
-    private JComboBox portsList;
-    private ArrayList<String> listPorts;
-    
-    private JPanel commandsPanel;
+/**
+ * 
+ * @author Ivelin Yanev <qnev89@gmail.com>
+ * @since 2015
+ */
+public class CommunicationView extends JPanel implements ConnectionStatus {
 
-    public CommunicationView() {
-        this.add(Box.createRigidArea(new Dimension(0, 10)));
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(this.createConnectionPanel());
+	private JButton sendButton;
+	private JButton connectButton;
+	private JComboBox portsList;
+	private ArrayList<String> listPorts;
 
-        this.add(this.createCommandSendPanel());
-        this.add(Box.createRigidArea(new Dimension(0, 100)));
-    }
+	private JPanel commandsPanel;
 
-    private JPanel createCommandSendPanel() {
-        Border border;
-        String borderTitle;
-        String buttonTitle;
+	public CommunicationView() {
+		this.add(Box.createRigidArea(new Dimension(0, 10)));
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.add(this.createConnectionPanel());
 
-        borderTitle = ViewConstants.COMMANDS_SEND_BORDER;
-        buttonTitle = ViewConstants.BUTTON_SEND;
-        commandsPanel = new JPanel();
+		this.add(this.createCommandSendPanel());
+		this.add(Box.createRigidArea(new Dimension(0, 100)));
+	}
 
-        border = BorderFactory.createTitledBorder(borderTitle);
+	private JPanel createCommandSendPanel() {
+		Border border;
+		String borderTitle;
+		String buttonTitle;
 
-        commandsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
-        commandsPanel.setPreferredSize(new Dimension(0, 70));
-        commandsPanel.setBorder(border);
-        commandsPanel.setVisible(false);
+		borderTitle = ViewConstants.COMMANDS_SEND_BORDER;
+		buttonTitle = ViewConstants.BUTTON_SEND;
+		commandsPanel = new JPanel();
 
-        this.sendButton = new JButton(buttonTitle);
-        commandsPanel.add(this.sendButton);
+		border = BorderFactory.createTitledBorder(borderTitle);
 
-        return commandsPanel;
-    }
+		commandsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
+		commandsPanel.setPreferredSize(new Dimension(0, 70));
+		commandsPanel.setBorder(border);
+		commandsPanel.setVisible(false);
 
-    private JPanel createConnectionPanel() {
-        JPanel connectionPanel;
-        Border border;
-        String borderTitle;
-        String buttonTitle;
+		this.sendButton = new JButton(buttonTitle);
+		commandsPanel.add(this.sendButton);
 
-        borderTitle = ViewConstants.CONNECTION_BORDER;
-        buttonTitle = ViewConstants.BUTTON_CONNECT_LABEL;
-        connectionPanel = new JPanel();
+		return commandsPanel;
+	}
 
-        border = BorderFactory.createTitledBorder(borderTitle);
+	private JPanel createConnectionPanel() {
+		JPanel connectionPanel;
+		Border border;
+		String borderTitle;
+		String buttonTitle;
 
-        connectionPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 0));
-        connectionPanel.setBorder(border);
+		borderTitle = ViewConstants.CONNECTION_BORDER;
+		buttonTitle = ViewConstants.BUTTON_CONNECT_LABEL;
+		connectionPanel = new JPanel();
 
-        this.portsList = new JComboBox();
+		border = BorderFactory.createTitledBorder(borderTitle);
 
-        ComboBoxListPortAdapter adapter = new ComboBoxListPortAdapter(this.portsList);
+		connectionPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 0));
+		connectionPanel.setBorder(border);
 
-        this.connectButton = new JButton(buttonTitle);
-        this.connectButton.setPreferredSize(new Dimension(80, 20));
-        
-        this.portsList.addPopupMenuListener(adapter);
-        this.portsList.setPreferredSize(new Dimension(180, 20));
-        
+		this.portsList = new JComboBox();
 
-        connectionPanel.add(this.portsList);
-        connectionPanel.add(this.connectButton);
+		ComboBoxListPortAdapter adapter = new ComboBoxListPortAdapter(
+				this.portsList);
 
-        return connectionPanel;
-    }
+		this.connectButton = new JButton(buttonTitle);
+		this.connectButton.setPreferredSize(new Dimension(80, 20));
 
-    /*
-     private void initPane() {
-     this.sendButton = new JButton("Send Command");
-     this.add(this.sendButton);
-    
-     this.connectButton = new JButton("Connect");
-     this.add(this.connectButton);
-    
-    
-     this.portsList.setSelectedIndex(4);
-     this.add(new JLabel("This is text that goes above the ComboBox:"));
-     this.add(this.portsList);
-     } */
-    public void addActionListener(ActionListener _listener) {
-      //  this.sendButton.addActionListener(_listener);
-        //   this.sendButton.setActionCommand(BUTTON_SEND);
+		this.portsList.addPopupMenuListener(adapter);
+		this.portsList.setPreferredSize(new Dimension(180, 20));
 
-        this.connectButton.addActionListener(_listener);
-        this.connectButton.setActionCommand(ViewConstants.CONNECT_ACTION_COMAND);
+		connectionPanel.add(this.portsList);
+		connectionPanel.add(this.connectButton);
 
-    }
+		return connectionPanel;
+	}
 
-    public void addComoBoxListener(PopupMenuListener _listener) {
-        this.portsList.addPopupMenuListener(_listener);
-        this.portsList.setActionCommand(ViewConstants.COMBOBOX_PORTS);
-    }
+	/*
+	 * private void initPane() { this.sendButton = new JButton("Send Command");
+	 * this.add(this.sendButton);
+	 * 
+	 * this.connectButton = new JButton("Connect");
+	 * this.add(this.connectButton);
+	 * 
+	 * 
+	 * this.portsList.setSelectedIndex(4); this.add(new
+	 * JLabel("This is text that goes above the ComboBox:"));
+	 * this.add(this.portsList); }
+	 */
+	public void addActionListener(ActionListener _listener) {
+		// this.sendButton.addActionListener(_listener);
+		// this.sendButton.setActionCommand(BUTTON_SEND);
 
-    public String getPortName() {
-        return (String) this.portsList.getSelectedItem();
-    }
+		this.connectButton.addActionListener(_listener);
+		this.connectButton
+				.setActionCommand(ViewConstants.CONNECT_ACTION_COMAND);
 
-    public void setListPorts(ArrayList<String> ports) {
-        this.listPorts = ports;
-    }
+	}
 
-    @Override
-    public void statusChanged(boolean _connected) {
-           SwingUtilities.invokeLater(new Runnable() {
-               @Override
-               public void run() {
-                  toggleConnection(_connected);
-               }        
-           });
-          
-    }
-    
-    public void toggleConnection(boolean connection) {
-        if(connection) {
-            this.connectButton.setText(ViewConstants.BUTTON_CLOSE_LABEL);
-            this.connectButton.setActionCommand(ViewConstants.DISCONNECT_ACTION_COMAND);
-            this.commandsPanel.setVisible(true);
-        } else {
-            this.connectButton.setText(ViewConstants.BUTTON_CONNECT_LABEL);
-            this.connectButton.setActionCommand(ViewConstants.CONNECT_ACTION_COMAND);
-            this.commandsPanel.setVisible(false);
-        }
-    }
+	public void addComoBoxListener(PopupMenuListener _listener) {
+		this.portsList.addPopupMenuListener(_listener);
+		this.portsList.setActionCommand(ViewConstants.COMBOBOX_PORTS);
+	}
+
+	public String getPortName() {
+		return (String) this.portsList.getSelectedItem();
+	}
+
+	public void setListPorts(ArrayList<String> ports) {
+		this.listPorts = ports;
+	}
+
+	@Override
+	public void statusChanged(boolean _connected) {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				toggleConnection(_connected);
+			}
+		});
+
+	}
+
+	public void toggleConnection(boolean connection) {
+		if (connection) {
+			this.connectButton.setText(ViewConstants.BUTTON_CLOSE_LABEL);
+			this.connectButton
+					.setActionCommand(ViewConstants.DISCONNECT_ACTION_COMAND);
+			this.commandsPanel.setVisible(true);
+		} else {
+			this.connectButton.setText(ViewConstants.BUTTON_CONNECT_LABEL);
+			this.connectButton
+					.setActionCommand(ViewConstants.CONNECT_ACTION_COMAND);
+			this.commandsPanel.setVisible(false);
+		}
+	}
 }

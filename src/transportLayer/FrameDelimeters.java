@@ -12,27 +12,17 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package gui;
+package transportLayer;
 
 /**
  * 
  * @author Ivelin Yanev <qnev89@gmail.com>
  * @since 2015
  */
-public interface ViewConstants {
+public interface FrameDelimeters {
 
-	// labels
-	public static final String CONNECTION_BORDER = "Connection";
-	public static final String BUTTON_CONNECT_LABEL = "Connect";
-	public static final String BUTTON_CLOSE_LABEL = "Close";
-	public static final String COMBOBOX_PORTS = "COMBOBOX_PORTS";
+	public static final byte START = 0x7E;
 
-	// action commands
-	public static final String CONNECT_ACTION_COMAND = "Connect";
-	public static final String DISCONNECT_ACTION_COMAND = "Disconnect";
-
-	// todo
-	public static final String COMMANDS_SEND_BORDER = "Commands send";
-	public static final String BUTTON_SEND = "BTN_SEND";
-	public static final String NO_COMM_PORT = "NO_COMM_PORT";
+	// TODO change
+	public static final byte END = 0x7A;
 }
