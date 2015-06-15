@@ -30,7 +30,7 @@ public class GetSensorData extends Command {
 	private String sensorType;
 
 	public GetSensorData(String data) {
-		super(CommandIndeficator.Sensor);
+		super(CommandIndificator.Sensor);
 		this.sensorType = data;
 	}
 

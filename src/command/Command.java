@@ -15,26 +15,42 @@
 package command;
 
 /**
+ * The <code>Command</code> represents a command structure. Each command has
+ * <b>id</b> example{@link CommandIndeficator#Motor}.
  * 
  * @author Ivelin Ynev <qnev89@gmail.com>
  * @since 2015
  */
 public abstract class Command {
 
-	private CommandIndeficator ind; // EnumClass
+	/**
+	 * The command indificator.
+	 */
+	private CommandIndificator ind;
 
-	protected Command(CommandIndeficator ind) {
+	/**
+	 * A constructor.
+	 * 
+	 * @param ind
+	 *            the id of the command.
+	 */
+	protected Command(CommandIndificator ind) {
 		this.ind = ind;
 	}
 
-	public CommandIndeficator getCommandIndeficator() {
+	/**
+	 * Returns command indificator.
+	 * 
+	 * @return the id of the command.
+	 */
+	public CommandIndificator getCommandIndificator() {
 		return this.ind;
 	}
 
 	/**
-	 * return byte for command data
+	 * Returns byte for command data.
 	 * 
-	 * @return byte
+	 * @return byte of data.
 	 */
 	public abstract byte[] getData();
 

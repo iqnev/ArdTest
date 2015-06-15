@@ -14,7 +14,7 @@
  */
 package comunicationLayer;
 
-import com.sun.jmx.snmp.SnmpDataTypeEnums;
+
 
 import connection.Connection;
 import gnu.io.CommPortIdentifier;

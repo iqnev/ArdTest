@@ -47,7 +47,7 @@ public class TestDataLink implements DataLinkLayer {
 		// Add command bytes to digest
 		// md.update(_command.getCommandIndeficator().getByte());
 		buffer.put(FrameDelimeters.START);
-		buffer.put(_command.getCommandIndeficator().getByte());
+		buffer.put(_command.getCommandIndificator().getByte());
 		buffer.putInt(dataLenght);
 		buffer.put(_command.getData());
 		// buffer.put(md.digest());

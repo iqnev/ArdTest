@@ -19,14 +19,14 @@ package command;
  * @author Ivelin Ynev <qnev89@gmail.com>
  * @since 2015
  */
-public enum CommandIndeficator {
+public enum CommandIndificator {
 
 	Sensor(0x10), // byte
 	Motor(0x11); // byte
 
 	private byte type;
 
-	private CommandIndeficator(int _type) {
+	private CommandIndificator(int _type) {
 		this.type = (byte) _type;
 	}
 
