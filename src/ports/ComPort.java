@@ -115,7 +115,7 @@ public class ComPort {
 		comPorts = ComPort.getAvailableComPorts();
 
 		for (CommPortIdentifier port : comPorts) {
-			type = ComPortType.fromInt(port.getPortType());
+			type = ComPortType.getComPortFromInt(port.getPortType());
 			if (type != portType) {
 				comPorts.remove(port);
 			}

@@ -17,6 +17,17 @@ package ports;
 import gnu.io.CommPortIdentifier;
 
 /**
+ * The <code>ComPortType</code> Provides a mechanism for works with different
+ * types of communication protocols.
+ * <ul>
+ * <li>RS-232 is a standard for serial communication transmission of data.</li>
+ * <li>IEEE 1284 is a standard that defines bi-directional parallel
+ * communications</li>
+ * <li>I2C Protocol is a protocol intended to allow multiple “slave” digital
+ * integrated circuits (“chips”) to communicate with one or more “master” chip.</li>
+ * <li>RS-485 enables the configuration of inexpensive local networks and
+ * multidrop communications links.</li>
+ * </ul>
  * 
  * @author Ivelin Yanev <qnev89@gmail.com>
  * @since 2015
@@ -50,29 +61,40 @@ public enum ComPortType {
 
 	private int type;
 
-	private ComPortType(int _type) {
-		this.type = _type;
+	/**
+	 * A constructor with a parameter.
+	 * 
+	 * @param type
+	 *            the COM Port name.
+	 */
+	private ComPortType(final int type) {
+		this.type = type;
 	}
 
 	/**
-	 * @return the {@code int} representing this {@code ComPortType.}
+	 * Returns the id representing this {@link ComPortType}.
+	 * 
+	 * @return the id.
 	 */
 	public int getInt() {
 		return this.type;
 	}
 
 	/**
-	 * @param _type
-	 *            an {@code int} value.
-	 * @return the {@code ComPortType} representing the specified {@code int}.
+	 * Returns a {@link ComPortType} representing the specified type.
+	 * 
+	 * @param type
+	 *            the value type.
+	 * @return the {@link ComPortType}.
 	 */
-	public static ComPortType fromInt(int _type) {
+	public static ComPortType getComPortFromInt(final int pType) {
+		ComPortType comPortType = ComPortType.UNKNOWN;
 		for (ComPortType type : ComPortType.values()) {
-			if (type.getInt() == _type) {
-				return type;
+			if (type.getInt() == pType) {
+				comPortType = type;
 			}
 		}
 
-		return ComPortType.UNKNOWN;
+		return comPortType;
 	}
 }
