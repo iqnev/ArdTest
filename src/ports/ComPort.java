@@ -22,53 +22,70 @@ import java.util.Enumeration;
 import java.util.List;
 
 /**
+ * The <code>ComPort</code> class allows an application to launch associated the
+ * mandatory COM Ports of the current computer for our needs.
+ * <p>
+ * Supported operations include:
+ * <ul>
+ * <li>gets all available COM Port Identifiers</li>
+ * <li>gets all available COM Port Names</li>
+ * <li>creates COM Port by given an Identifier</li>
+ * </ul>
  * 
  * @author Ivelin Yanev <qnev89@gmail.com>
  * @since 2015
  */
 public class ComPort {
 
-	private static ComPort instance;
+	private static ComPort instance = null;
 
 	/**
-	 * @return the Singleton instance of {@code ComPortFactory}.
+	 * Returns <code>ComPort</code> instance of the current object.
+	 * 
+	 * @return the Singleton instance of {@link ComPort} class.
 	 */
 	public static ComPort getInstance() {
-		if (ComPort.instance == null) {
-			ComPort.instance = new ComPort();
+		if (instance == null) {
+			instance = new ComPort();
 		}
 
-		return ComPort.instance;
+		return instance;
 	}
 
+	/**
+	 * The private default controller.
+	 */
 	private ComPort() {
 
 	}
 
 	/**
-	 * @return a {@code List} of {@code CommPortIdentifier}s representing the
-	 *         available COM Ports.
+	 * Returns the {@link CommPortIdentifier} representing the available COM
+	 * Ports.
+	 * 
+	 * @return the {@link List} of {@link CommPortIdentifier}.
 	 */
 	public static List<CommPortIdentifier> getAvailableComPorts() {
-		Enumeration<?> foundIds;
-		List<CommPortIdentifier> identifiers;
+		List<CommPortIdentifier> identifiers = null;
 
-		foundIds = CommPortIdentifier.getPortIdentifiers();
-		identifiers = (List<CommPortIdentifier>) Collections.list(foundIds);
+		if (CommPortIdentifier.getPortIdentifiers() != null) {
+			identifiers = Collections.list(CommPortIdentifier
+					.getPortIdentifiers());
+		}
 
 		return identifiers;
 	}
 
 	/**
-	 * @return a {@code List} of {@code String}s representing the names of the
-	 *         available COM Ports.
+	 * Returns the representing the names of the available COM Ports.
+	 * 
+	 * @return the {@link List} of the {@link String}.
 	 */
 	public static List<String> getAvailableComPortNames() {
 		List<CommPortIdentifier> comPorts;
-		List<String> comPortNames;
+		List<String> comPortNames = new ArrayList<String>();
 
-		comPorts = ComPort.getAvailableComPorts();
-		comPortNames = new ArrayList<String>();
+		comPorts = getAvailableComPorts();
 
 		for (CommPortIdentifier portId : comPorts) {
 			comPortNames.add(portId.getName());
@@ -78,25 +95,28 @@ public class ComPort {
 	}
 
 	/**
-	 * @param _portType
-	 *            the {@code ComPortType} to filter with.
-	 * @return a {@code List} of {@code CommPortIdentifier}s which are of the
+	 * Returns the available ComPort by {@link ComPortType}. If the ComPort is
+	 * not-existing the method throws the {@link NullPointerException}.
+	 * 
+	 * @param portType
+	 *            the {@link ComPortType} to filter with.
+	 * @return the {@link List} of {@link CommPortIdentifier} which are of the
 	 *         specified type.
 	 */
-	public List<CommPortIdentifier> getAvailableComPorts(ComPortType _portType) {
+	public List<CommPortIdentifier> getAvailableComPorts(
+			final ComPortType portType) {
 		List<CommPortIdentifier> comPorts;
 		ComPortType type;
 
-		if (_portType == null) {
-			throw new NullPointerException("Port type is null"); //$NON-NLS-1$
+		if (portType == null) {
+			throw new NullPointerException("Port type is null");
 		}
 
 		comPorts = ComPort.getAvailableComPorts();
 
 		for (CommPortIdentifier port : comPorts) {
-
 			type = ComPortType.fromInt(port.getPortType());
-			if (type != _portType) {
+			if (type != portType) {
 				comPorts.remove(port);
 			}
 		}
@@ -107,21 +127,23 @@ public class ComPort {
 	/**
 	 * Creates a {@code ComPortIdentifier} from the specified COM Port name.
 	 *
-	 * @param _comName
-	 *            name of the COM Port.
-	 * @return the {@code ComPortIdentifier} object.
+	 * @param comName
+	 *            the name of the COM Port.
+	 * @return the {@link ComPortIdentifier} object.
 	 */
-	@SuppressWarnings("nls")
-	public static CommPortIdentifier createComPortIdentifier(String _comName) {
-
-		if (_comName == null || _comName.length() == 0) {
+	public static CommPortIdentifier createComPortIdentifier(
+			final String comName) {
+		CommPortIdentifier comPortIdentifier;
+		if (comName == null || comName.length() == 0) {
 			throw new IllegalArgumentException("Comport name is null or empty");
 		}
 		try {
-			return CommPortIdentifier.getPortIdentifier(_comName);
+			comPortIdentifier = CommPortIdentifier.getPortIdentifier(comName);
 		} catch (NoSuchPortException _e) {
-			return null;
+			comPortIdentifier = null;
 		}
+
+		return comPortIdentifier;
 	}
 
 }
