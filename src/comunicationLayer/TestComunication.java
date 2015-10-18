@@ -69,7 +69,7 @@ public class TestComunication implements SerialPortEventListener {
 	public void sendComand(Command cmd) throws IOException {
 		byte[] cmdData;
 		cmdData = cmd.getData();
-		this.serialClassConnection.write(cmdData);
+		this.serialClassConnection.writeBlock(cmdData);
 	}
 
 	// Example how you can make command and send it

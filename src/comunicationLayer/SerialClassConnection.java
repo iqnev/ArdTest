@@ -180,7 +180,7 @@ public class SerialClassConnection extends Connection {
 	}
 
 	@Override
-	public void write(byte[] bytes) throws IOException {
+	public void writeBlock(byte[] bytes) throws IOException {
 		if (bytes == null) {
 			throw new NullPointerException("Byte buffer is empty");
 		}

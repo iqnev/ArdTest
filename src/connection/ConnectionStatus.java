@@ -15,10 +15,25 @@
 package connection;
 
 /**
+ * The <code>ConnectionStatus</code> interface allows an application to receive
+ * connection status events. This interface provides a method for notification
+ * of the status is changed.
+ * 
+ * <p>
+ * Each application which wants to receive connection status <b>MUST</b>
+ * implementation <code>ConnectionStatus</code> interface and then in class
+ * constructor <b>MUST</b> registration for that event
  * 
  * @author Ivelin Yanev <qnev89@gmail.com>
  * @since 2015
  */
 public interface ConnectionStatus {
-	public void statusChanged(boolean _connected);
+
+	/**
+	 * This method called when a connection status is changed.
+	 * 
+	 * @param isConnected
+	 *            the connection status.
+	 */
+	public void statusChanged(boolean isConnected);
 }
