@@ -12,7 +12,7 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package comunicationLayer;
+package com.fortran.arduino.impl.comunicationlayer;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
@@ -21,40 +21,57 @@ import gnu.io.SerialPortEventListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.TooManyListenersException;
 
-import command.Command;
-import connection.Connection;
-import connection.ConnectionStatus;
-import static sun.security.krb5.Confounder.bytes;
+import com.fortran.arduino.connection.ConnectionStatus;
+import com.fortran.arduino.impl.command.Command;
 
 /**
+ * The class, which creates Serial connection and provided all communication
+ * mechanism for send and arrive the data.
  * 
  * @author Ivelin Yanev <qnev89@gmail.com>
  * @since 2015
  */
-public class TestComunication implements SerialPortEventListener {
+public class TwoWayComunication implements SerialPortEventListener {
 
-	private Connection connection;
+	/**
+	 * The field with an {@link SerialClassConnection} object.
+	 */
 	private SerialClassConnection serialClassConnection;
 
-	public TestComunication() throws IOException, TooManyListenersException {
+	/**
+	 * A default constructor.
+	 */
+	public TwoWayComunication() {
 		this.serialClassConnection = SerialClassConnection.getInstance();
 	}
 
-	// register connection change status observer
-	public void addCannectionStatusListener(ConnectionStatus connectionStatus) {
+	/**
+	 * Registers connection change status observer.
+	 * 
+	 * @param connectionStatus
+	 *            the {@link ConnectionStatus} object.
+	 */
+	public void addCannectionStatusListener(
+			final ConnectionStatus connectionStatus) {
 		this.serialClassConnection.registerChangedListener(connectionStatus);
 	}
 
-	public boolean openPort(String portName) throws NoSuchPortException,
-			TooManyListenersException {
+	/**
+	 * Opens a CommPort by CommPort name.
+	 * 
+	 * @param portName
+	 *            the name of CommPort.
+	 * @throws IOException
+	 *             if {@link IOException} occurs.
+	 * @throws NoSuchPortException
+	 *             if {@link NoSuchPortException} occurs.
+	 * @throws TooManyListenersException
+	 *             if {@link TooManyListenersException} occurs.
+	 */
+	public void openPort(String portName) throws IOException,
+			NoSuchPortException, TooManyListenersException {
 		if (portName == null || portName.isEmpty()) {
 			throw new NullPointerException("Portname is null");
 		}
@@ -63,9 +80,9 @@ public class TestComunication implements SerialPortEventListener {
 
 		this.serialClassConnection.openPort(port);
 		this.serialClassConnection.addSerialEventListener(this);
-		return true;
 	}
-
+	
+	//TODO
 	public void sendComand(Command cmd) throws IOException {
 		byte[] cmdData;
 		cmdData = cmd.getData();
@@ -87,7 +104,6 @@ public class TestComunication implements SerialPortEventListener {
 	 * }
 	 */
 
-	@Override
 	public void serialEvent(SerialPortEvent spe) {
 		if (spe.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {

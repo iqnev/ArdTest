@@ -13,11 +13,11 @@
  * 
  */
 
-package transportLayer;
+package com.fortran.arduino.transportlayer;
 
-import packets.Packet;
-import command.Command;
-import connection.Connection;
+import com.fortran.arduino.impl.command.Command;
+import com.fortran.arduino.impl.connection.Connection;
+import com.fortran.arduino.impl.packets.Packet;
 
 /**
  * 

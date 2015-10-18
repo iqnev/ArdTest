@@ -12,26 +12,17 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package helpers;
-
-import java.io.Closeable;
-import java.io.IOException;
+package com.fortran.arduino.transportlayer;
 
 /**
  * 
  * @author Ivelin Yanev <qnev89@gmail.com>
  * @since 2015
  */
-public class Utilities {
+public interface FrameDelimeters {
 
-	public static void close(Closeable stream) {
-		if (stream == null) {
-			return;
-		}
+	public static final byte START = 0x7E;
 
-		try {
-			stream.close();
-		} catch (IOException _e) {
-		}
-	}
+	// TODO change
+	public static final byte END = 0x7A;
 }

@@ -26,10 +26,10 @@ import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 
-import packets.GetSensorData;
-import command.Command;
-import comunicationLayer.SerialClassConnection;
-import comunicationLayer.TestComunication;
+import com.fortran.arduino.impl.command.Command;
+import com.fortran.arduino.impl.comunicationlayer.SerialClassConnection;
+import com.fortran.arduino.impl.comunicationlayer.TwoWayComunication;
+import com.fortran.arduino.impl.packets.GetSensorData;
 
 /**
  * @author Ivelin Yanev <qnev89@gmail.com>
@@ -40,7 +40,7 @@ public class CommunicationController implements ActionListener {
 	private JFrame frame;
 	private CommunicationView view;
 
-	private TestComunication communication;
+	private TwoWayComunication communication;
 
 	public CommunicationController() throws IOException,
 			TooManyListenersException {
@@ -52,7 +52,7 @@ public class CommunicationController implements ActionListener {
 		this.view.addActionListener(this);
 
 		// initialize connection here
-		this.communication = new TestComunication();
+		this.communication = new TwoWayComunication();
 		this.communication.addCannectionStatusListener(this.view);
 
 		this.frame.getContentPane().add(this.view);
@@ -83,10 +83,14 @@ public class CommunicationController implements ActionListener {
 
 			try {
 				this.communication.openPort(portName);
+
 			} catch (NoSuchPortException e) {
 				System.out.println("Error");
 			} catch (TooManyListenersException e) {
 				System.out.println("Error");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		} else if (actionCommand.equals(ViewConstants.DISCONNECT_ACTION_COMAND)) {

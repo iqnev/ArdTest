@@ -12,7 +12,7 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package ports;
+package com.fortran.arduino.impl.ports;
 
 import gnu.io.CommPortIdentifier;
 

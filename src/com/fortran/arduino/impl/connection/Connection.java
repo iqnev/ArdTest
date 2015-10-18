@@ -12,11 +12,13 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package connection;
+package com.fortran.arduino.impl.connection;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import com.fortran.arduino.connection.ConnectionStatus;
 
 /**
  * The <code>Connection</code> abstract class allows an application to
@@ -32,6 +34,16 @@ import java.util.ArrayList;
  * @since 2015
  */
 public abstract class Connection {
+
+	/**
+	 * The value of TIME OUT constant.
+	 */
+	public static final int DEFAULT_TIME_OUT = 2000;
+
+	/**
+	 * The value data rate.
+	 */
+	public static final int DEFAULT_DATA_RATE = 9600;
 
 	/**
 	 * The all registered events.

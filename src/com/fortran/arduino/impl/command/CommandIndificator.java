@@ -12,17 +12,28 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package transportLayer;
+package com.fortran.arduino.impl.command;
 
 /**
  * 
- * @author Ivelin Yanev <qnev89@gmail.com>
+ * @author Ivelin Ynev <qnev89@gmail.com>
  * @since 2015
  */
-public interface FrameDelimeters {
+public enum CommandIndificator {
 
-	public static final byte START = 0x7E;
+	Sensor(0x10), // byte
+	Motor(0x11); // byte
 
-	// TODO change
-	public static final byte END = 0x7A;
+	private byte type;
+
+	private CommandIndificator(int _type) {
+		this.type = (byte) _type;
+	}
+
+	/**
+	 * @return the {@code int} representing this {@code ComPortType.}
+	 */
+	public byte getByte() {
+		return this.type;
+	}
 }

@@ -12,7 +12,7 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package transportLayer;
+package com.fortran.arduino.transportlayer;
 
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
@@ -20,9 +20,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import packets.Packet;
-import command.Command;
-import connection.Connection;
+import com.fortran.arduino.impl.command.Command;
+import com.fortran.arduino.impl.connection.Connection;
+import com.fortran.arduino.impl.packets.Packet;
 
 /**
  * 

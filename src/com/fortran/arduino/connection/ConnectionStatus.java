@@ -12,31 +12,28 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package packets;
-
-import command.Command;
-import command.CommandIndeficator;
+package com.fortran.arduino.connection;
 
 /**
+ * The <code>ConnectionStatus</code> interface allows an application to receive
+ * connection status events. This interface provides a method for notification
+ * of the status is changed.
+ * 
+ * <p>
+ * Each application which wants to receive connection status <b>MUST</b>
+ * implementation <code>ConnectionStatus</code> interface and then in class
+ * constructor <b>MUST</b> registration for that event
  * 
  * @author Ivelin Yanev <qnev89@gmail.com>
  * @since 2015
  */
-public class GetSensorData extends Command {
+public interface ConnectionStatus {
 
 	/**
-     * 
-     */
-	private String sensorType;
-
-	public GetSensorData(String data) {
-		super(CommandIndificator.Sensor);
-		this.sensorType = data;
-	}
-
-	@Override
-	public byte[] getData() {
-		return this.sensorType.getBytes();
-	}
-
+	 * This method called when a connection status is changed.
+	 * 
+	 * @param isConnected
+	 *            the connection status.
+	 */
+	public void statusChanged(boolean isConnected);
 }

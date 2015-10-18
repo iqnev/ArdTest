@@ -14,8 +14,6 @@
  */
 package gui;
 
-import helpers.ComboBoxListPortAdapter;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -34,7 +32,8 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.PopupMenuListener;
 
-import connection.ConnectionStatus;
+import com.fortran.arduino.connection.ConnectionStatus;
+import com.fortran.arduino.impl.utilities.ComboBoxListPortAdapter;
 
 /**
  * 

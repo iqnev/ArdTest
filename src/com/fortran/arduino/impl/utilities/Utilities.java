@@ -12,28 +12,26 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package command;
+package com.fortran.arduino.impl.utilities;
+
+import java.io.Closeable;
+import java.io.IOException;
 
 /**
  * 
- * @author Ivelin Ynev <qnev89@gmail.com>
+ * @author Ivelin Yanev <qnev89@gmail.com>
  * @since 2015
  */
-public enum CommandIndificator {
+public class Utilities {
 
-	Sensor(0x10), // byte
-	Motor(0x11); // byte
+	public static void close(Closeable stream) {
+		if (stream == null) {
+			return;
+		}
 
-	private byte type;
-
-	private CommandIndificator(int _type) {
-		this.type = (byte) _type;
-	}
-
-	/**
-	 * @return the {@code int} representing this {@code ComPortType.}
-	 */
-	public byte getByte() {
-		return this.type;
+		try {
+			stream.close();
+		} catch (IOException _e) {
+		}
 	}
 }
