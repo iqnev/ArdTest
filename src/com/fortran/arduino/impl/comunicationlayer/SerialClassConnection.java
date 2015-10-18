@@ -234,7 +234,7 @@ public class SerialClassConnection extends Connection {
 		if (bytes == null) {
 			throw new NullPointerException("Byte buffer is empty");
 		}
-
+		System.out.println("SerialClassConnection.writeBlock() bytes SIZE >>>>>>>>>>>>" + bytes.length);
 		this.outputStream.write(bytes);
 	}
 

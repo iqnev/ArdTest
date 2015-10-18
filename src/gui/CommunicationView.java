@@ -125,8 +125,8 @@ public class CommunicationView extends JPanel implements ConnectionStatus {
 	 * this.add(this.portsList); }
 	 */
 	public void addActionListener(ActionListener _listener) {
-		// this.sendButton.addActionListener(_listener);
-		// this.sendButton.setActionCommand(BUTTON_SEND);
+		this.sendButton.addActionListener(_listener);
+		this.sendButton.setActionCommand(ViewConstants.BUTTON_SEND);
 
 		this.connectButton.addActionListener(_listener);
 		this.connectButton

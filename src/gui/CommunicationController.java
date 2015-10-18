@@ -42,6 +42,9 @@ public class CommunicationController implements ActionListener {
 
 	private TwoWayComunication communication;
 
+	private static final Logger LOGGER = Logger
+			.getLogger(CommunicationController.class.getName());
+
 	public CommunicationController() throws IOException,
 			TooManyListenersException {
 		this.frame = new JFrame("Test Communication");
@@ -61,6 +64,7 @@ public class CommunicationController implements ActionListener {
 
 	private void sendCommand() throws IOException {
 		Command cmd = new GetSensorData("hellow");
+		System.out.println("CommunicationController.sendCommand() Command >>>>>>" + cmd.getData().length);
 		this.communication.sendComand(cmd);
 
 	}
@@ -72,28 +76,37 @@ public class CommunicationController implements ActionListener {
 		actionCommand = _event.getActionCommand();
 
 		if (actionCommand.equals(ViewConstants.BUTTON_SEND)) {
+			
+			System.out
+					.println("CommunicationController.actionPerformed() Pressed >>>>>>>>>> "
+							+ ViewConstants.BUTTON_SEND);
 			try {
 				this.sendCommand();
 			} catch (IOException ex) {
-				Logger.getLogger(CommunicationController.class.getName()).log(
-						Level.SEVERE, null, ex);
+				System.out
+				.println("CommunicationController.actionPerformed() IOException >>>>>>>>>> "
+						+ ex.getMessage());
 			}
 		} else if (actionCommand.equals(ViewConstants.CONNECT_ACTION_COMAND)) {
 			String portName = this.view.getPortName();
-
+			System.out
+					.println("CommunicationController.actionPerformed() Connection >>>>>>>>>> "
+							+ portName);
 			try {
 				this.communication.openPort(portName);
 
 			} catch (NoSuchPortException e) {
-				System.out.println("Error");
+				e.printStackTrace();
 			} catch (TooManyListenersException e) {
-				System.out.println("Error");
+				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		} else if (actionCommand.equals(ViewConstants.DISCONNECT_ACTION_COMAND)) {
+			System.out
+					.println("CommunicationController.actionPerformed() Connection Clossed");
 			SerialClassConnection.getInstance().close();
 		}
 
