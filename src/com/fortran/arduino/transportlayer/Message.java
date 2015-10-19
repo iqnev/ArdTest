@@ -12,13 +12,37 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * 
  */
-package com.fortran.arduino.impl.packets;
+package com.fortran.arduino.transportlayer;
 
 /**
- * 
  * @author Ivelin Yanev <qnev89@gmail.com>
  * @since 2015
  */
-public abstract class Packet implements com.fortran.arduino.packets.Packet {
+public interface Message {
 
+	/**
+	 * The constant, which is used to mark the beginning of each message header.
+	 */
+	public final static int START_OF_HEADING = 0x01;
+
+	/**
+	 * The constant, which is used to mark the ending of each message frame.
+	 */
+	public final static int END_OF_TRANSMISSION = 0x04;
+
+	/**
+	 * The constant with an Acknowledgment value.
+	 */
+	public final static int ACK = 0x06;
+
+	/**
+	 * The CRC calculations and validates a checksum.
+	 * 
+	 * @param fMessage
+	 *            the message.
+	 * @return <code>if</code> CRC is correct. <code>false</code> otherwise.
+	 */
+	public boolean CRC16(Message fMessage);
+	
+	//TODO
 }
