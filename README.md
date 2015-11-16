@@ -15,6 +15,8 @@ We have said above, that  You can not execute Java code on the Arduino, so our t
 
 The ArduinoTestingTool consists of a set of modules. Each module performs a clear and independent function. Modules can be instantiated by specific needs for working with them. According to the above mentioned considerations, our suggestion is to provide two design architectures and guidelines for work.
 
+![Architecture model](https://github.com/iqnev/ArduinoTestingTool/blob/master/Wiki/AWS%20Design.png)
+
 **1. Consumer Access Layer:**
 The main functionality of the Consumer Access Layer is to provide an abstract representation of the mechanisms for working with ArduinoTestingTool. Each of them translates the commands from the consumer into specific application commands. In this adapter the programmer can implement any kind of mechanism for working:web page, mobile app or desktop app.
 
